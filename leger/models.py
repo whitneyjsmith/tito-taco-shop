@@ -1,9 +1,10 @@
 from django.db import models
 from datetime import date
 from django.db.models import Sum
+from django.contrib.auth.models import AbstractUser
 
 
-class User(models.Model):
+class User(AbstractUser):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     email = models.EmailField()
