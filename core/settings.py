@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ledger.apps.LedgerConfig',
     'products.apps.ProductsConfig',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
+TITO = '666'
