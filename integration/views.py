@@ -21,7 +21,6 @@ def slack_oauth(request):
     url = 'https://slack.com/api/oauth.access'
     json_response = requests.get(url, params)
     data = json.loads(json_response.text)
-    print(data)
     Team.objects.create(
         name=data['team_name'], 
         team_id=data['team_id'],
