@@ -25,8 +25,9 @@ SECRET_KEY = 'a(hx^5mi=$g(88u6dvm0at!1$%fsri1bzj1g7t)9b4qt+o2hin'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
 
@@ -37,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_slack_oauth',
     'products.apps.ProductsConfig',
+    'integration.apps.IntegrationConfig',
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
+SLACK_SCOPE = 'admin,bot'
+
+SLACK_PIPELINES = [
+    'integration.pipelines.debug_oauth_request',
+]
