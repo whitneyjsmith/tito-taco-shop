@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_slack_oauth',
+    'products.apps.ProductsConfig',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tito-taco-shop.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
