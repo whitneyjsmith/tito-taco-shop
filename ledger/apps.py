@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LegerConfig(AppConfig):
+class LedgerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'leger'
+    name = 'ledger'
