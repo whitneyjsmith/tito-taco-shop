@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'integration.apps.IntegrationConfig',
     "django_extensions",
+    'user.apps.UserConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -124,6 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
 SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
 SLACK_SCOPE = 'admin,bot'
@@ -131,3 +134,7 @@ SLACK_SCOPE = 'admin,bot'
 SLACK_PIPELINES = [
     'integration.pipelines.debug_oauth_request',
 ]
+=======
+TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
+TITO = '666'
+>>>>>>> TITO-2
