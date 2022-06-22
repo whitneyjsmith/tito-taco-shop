@@ -7,7 +7,7 @@ from django.http import HttpResponse
 
 def index(request):
     client_id = settings.SLACK_CLIENT_ID
-    return render(request, 'landing.html', {'client_id': client_id})
+    return render(request, 'slack_landing.html', {'client_id': client_id})
 
 
 def slack_oauth(request):
@@ -25,6 +25,7 @@ def slack_oauth(request):
         name=data['team_name'], 
         team_id=data['team_id'],
         bot_user_id=data['bot']['bot_user_id'],     
-        bot_access_token=data['bot']['bot_access_token']
+        bot_access_token=data['bot']['bot_access_token'],
+        chat_type="slack"
     )
     return HttpResponse('Bot added to your Slack team!')
