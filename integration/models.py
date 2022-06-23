@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your models here.
 
@@ -14,3 +16,13 @@ class Team(models.Model):
 
     def __str__(self):
         return f"{self.chat_type}-{self.team_id}: {self.name}"
+
+
+class TeamUser(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    user_team_id = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    details = models.JSONField()
+
+    def __str__(self):
+        return f"{self.team.chat_type}:{self.team.name}-{self.email}"
