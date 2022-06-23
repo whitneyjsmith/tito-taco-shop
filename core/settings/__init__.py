@@ -28,8 +28,9 @@ SECRET_KEY = 'a(hx^5mi=$g(88u6dvm0at!1$%fsri1bzj1g7t)9b4qt+o2hin'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Application definition
 
@@ -40,7 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ledger.apps.LedgerConfig',
     'products.apps.ProductsConfig',
+    'integration.apps.IntegrationConfig',
+    "django_extensions",
+    'user.apps.UserConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +128,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+<<<<<<< HEAD
+SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
+SLACK_SCOPE = 'admin,bot'
+
+SLACK_PIPELINES = [
+    'integration.pipelines.debug_oauth_request',
+]
+=======
+TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
+TITO = '666'
+>>>>>>> TITO-2
