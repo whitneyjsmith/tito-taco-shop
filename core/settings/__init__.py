@@ -90,6 +90,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'user.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -129,7 +131,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-<<<<<<< HEAD
 SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
 SLACK_SCOPE = 'admin,bot'
@@ -137,7 +138,5 @@ SLACK_SCOPE = 'admin,bot'
 SLACK_PIPELINES = [
     'integration.pipelines.debug_oauth_request',
 ]
-=======
 TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
 TITO = '666'
->>>>>>> TITO-2

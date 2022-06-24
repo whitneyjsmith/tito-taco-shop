@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from django.contrib.auth.models import AbstractUser
 
+
 def creation_date():
     return date.today()
 
@@ -13,6 +14,9 @@ class User(AbstractUser):
     creation_date = models.DateField(default=creation_date)
     is_active = models.BooleanField(default=True)
     unique_id = models.CharField(max_length=100)
+    team_user = models.OneToOneField('integration.TeamUser',
+                                     on_delete=models.SET_NULL,
+                                     null=True, blank=True)
 
     class Meta:
         constraints = [
@@ -23,4 +27,5 @@ class User(AbstractUser):
         ]
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}, {self.email}'
+        return f'{self.first_name} {self.last_name}, {self.email}' if \
+            self.first_name else self.email
