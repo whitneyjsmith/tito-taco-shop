@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 import os
+from django.core.files.storage import default_storage
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 try:
@@ -130,13 +131,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
-SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
-SLACK_SCOPE = 'admin,bot'
-
-SLACK_PIPELINES = [
-    'integration.pipelines.debug_oauth_request',
-]
-TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
-TITO = '666'
