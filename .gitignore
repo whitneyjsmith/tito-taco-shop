@@ -6,3 +6,6 @@ venv/
 
 # Byte-compiled files
 __pycache__/
+
+# Local settings file
+core/settings/local.py
