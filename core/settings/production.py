@@ -2,6 +2,7 @@
 Django production settings for core project
 """
 import os
+import dj_database_url
 
 DEBUG = True if (os.environ.get("DEBUG", "true").lower() == "true") else False
 
@@ -26,3 +27,8 @@ GOOGLE_APPLICATION_CREDENTIALS = os.environ.get(
 if GOOGLE_CREDENTIALS and GOOGLE_APPLICATION_CREDENTIALS:
     with open(GOOGLE_APPLICATION_CREDENTIALS, 'w') as fd:
         fd.write(GOOGLE_CREDENTIALS)
+
+
+# Databases
+DEFAULT_CONNECTION = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+DATABASES = {'default': DEFAULT_CONNECTION}
