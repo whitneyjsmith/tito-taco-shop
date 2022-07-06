@@ -9,12 +9,16 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
 import os
+from django.core.files.storage import default_storage
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+try:
+    from .local import *
+except ImportError as e:
+    from .production import *
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -87,6 +91,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'user.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -125,16 +131,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-<<<<<<< HEAD
-SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
-SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
-SLACK_SCOPE = 'admin,bot'
-
-SLACK_PIPELINES = [
-    'integration.pipelines.debug_oauth_request',
-]
-=======
-TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
-TITO = '666'
->>>>>>> TITO-2
