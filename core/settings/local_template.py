@@ -1,4 +1,3 @@
-from unittest.mock import DEFAULT
 import dj_database_url
 import sys
 
