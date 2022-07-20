@@ -71,7 +71,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # CAS
-CAS_SERVER_URL = "https://account.monumetric.com/"
+CAS_SERVER_URL = os.environ.get("CAS_URL", "https://account.monumetric.com/")
 CAS_LOGOUT_COMPLETELY = True
 CAS_PROVIDE_URL_TO_LOGOUT = True
 CAS_LOGIN_MSG = None
