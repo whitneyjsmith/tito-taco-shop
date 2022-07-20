@@ -42,12 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'ledger.apps.LedgerConfig',
     'products.apps.ProductsConfig',
     'integration.apps.IntegrationConfig',
     "django_extensions",
     'user.apps.UserConfig',
-    'rest_framework'
+    'rest_framework',
+    'django_cas_ng',
 ]
 
 MIDDLEWARE = [
@@ -56,10 +58,24 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_cas_ng.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+# Authentication
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+)
+
+# CAS
+CAS_SERVER_URL = "https://account.monumetric.com/"
+CAS_LOGOUT_COMPLETELY = True
+CAS_PROVIDE_URL_TO_LOGOUT = True
+CAS_LOGIN_MSG = None
+
 
 ROOT_URLCONF = 'core.urls'
 

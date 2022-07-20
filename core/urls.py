@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import django_cas_ng.views
 
 urlpatterns = [
+    path('account/login/', django_cas_ng.views.LoginView.as_view(), name='cas_ng_login'),
+    path('account/logout/', django_cas_ng.views.LogoutView.as_view(), name='cas_ng_logout'),
     path('admin/', admin.site.urls),
     # path('slack/', include('django_slack_oauth.urls')),
     path('integration/', include('integration.urls')),
