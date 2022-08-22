@@ -17,5 +17,4 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images')
     price = models.IntegerField()
     description = models.CharField(max_length=1000)
-    attributes = models.ManyToManyField(Attribute) # perhaps get rid of this?
-    attribute_bases = models.ManyToManyField(AttributeBase)
+    attributes = models.ManyToManyField(Attribute)
