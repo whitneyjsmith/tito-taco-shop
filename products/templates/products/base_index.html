@@ -1,0 +1,41 @@
+{% extends 'products/base.html' %}
+{% block content %}
+
+<div class="row border-top center marg-b-50">
+    <div class="col">
+        <p class="fs-20 bold">TITO GRAPHIC</p>
+        <h1 class="bold fs-70">When we succeed,<br>We taco 'bout it!</h1>
+    </div>
+</div>
+<div class="row border-top">
+    <div class="col-12 col-lg-3" id="filter-col">
+        <p>FILTERS GO HERE</p>
+        <ul>
+            <li>Filter 1</li>
+            <li>Filter 2</li>
+            <li>Filter 3</li>
+            <li>Filter 4</li>
+        </ul>
+    </div>
+    <div class="col-12 col-lg-9" id="products-col">
+        {% for chunk in products %}
+            <div class="row">
+                {% for product in chunk %}
+                    <div class="col-12 col-md-4 product">
+                        <img class="img-fluid" src="/{{ product.id }}/{{ product.image }}" alt="product picture">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p class="fs-20">{{ product.name }}</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <img class="img-fluid" src="/images/taco.png" alt="taco picture">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<p>{{ product.image }}</p>
+{% endblock content %}
