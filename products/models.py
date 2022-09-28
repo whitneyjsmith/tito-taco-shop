@@ -27,3 +27,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Category(models.Model):
+    category = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.category
+
+
+class Quote(models.Model):
+    category = models.ManyToManyField(Category, null=True, blank=True)
+    quote = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.quote
