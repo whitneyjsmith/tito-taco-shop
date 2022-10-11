@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from products.models import Product
+from django.http import HttpResponse
+from pprint import pprint
 
 
 def index(request):
@@ -17,3 +19,6 @@ def index(request):
         chunks.append(products[x:x + step])
     
     return render(request, 'products/base_index.html', context={'products': chunks})
+
+
+

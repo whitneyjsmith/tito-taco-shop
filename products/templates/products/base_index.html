@@ -1,4 +1,5 @@
 {% extends 'products/base.html' %}
+{% load static %}
 {% block content %}
 
 <div class="row border-top center marg-b-50">
@@ -21,14 +22,26 @@
         {% for chunk in products %}
             <div class="row">
                 {% for product in chunk %}
-                    <div class="col-12 col-md-4 product">
-                        <img class="img-fluid" src="/{{ product.id }}/{{ product.image }}" alt="product picture">
+                    <div class="col-12 col-md-4 product center">
+                        <!-- <img class="img-fluid" src="/{{ product.id }}/{{ product.image }}" alt="product picture"> -->
                         <div class="row">
-                            <div class="col-12 col-md-6">
-                                <p class="fs-20">{{ product.name }}</p>
+                            <div class="col-12">
+                                <img class="img-fluid prod-pic-home" src="{% static 'products/amazon-gift-card.png' %}" alt="gift card pic">
                             </div>
+                        </div>
+                        <div class="row vert-horiz-center">
                             <div class="col-12 col-md-6">
-                                <img class="img-fluid" src="/images/taco.png" alt="taco picture">
+                                <p class="fs-20">
+                                    <a href="{% url 'product-page' product.id %}">
+                                        {{ product.name }}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-3 center">
+                                <p>{{ product.price }}</p>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
                             </div>
                         </div>
                     </div>
