@@ -8,7 +8,7 @@ from datetime import datetime
 import functools
 import re
 
-emoji = ":test"
+EMOJI = ":taco"
 
 class Client():
     def __init__(self, team_id, team_name, bot_token):
@@ -80,7 +80,7 @@ class Client():
             recipients.remove(sender)
         print("Checking for multi tacos")
         multi_tacos = re.findall(r"(?<=test)(\d+)(?=:)", message)
-        num_tacos = message.count(f'{emoji}:') + sum(map(int, multi_tacos))
+        num_tacos = message.count(f'{EMOJI}:') + sum(map(int, multi_tacos))
         print(f"Num tacos: {num_tacos}")
         given_today = TacoLedger.objects.filter(
             giver=sender,
@@ -110,10 +110,10 @@ class Client():
         print(event)
         text = event.get('text', '')
         sender = event.get('user', '')
-        if emoji in text and '<@' in text:
+        if EMOJI in text and '<@' in text:
             print("EMOJI AND TAG DETECTED")
-            print(text.count(emoji))
-            if text.count(emoji) == 1:
+            print(text.count(EMOJI))
+            if text.count(EMOJI) == 1:
                 print("SENDING SINGLE TACO")
                 self.award_taco(text, sender)
             else:
