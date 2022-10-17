@@ -1,0 +1,32 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h1>Cart</h1>
+</div>
+<!-- This is for display products in cart. Not done yet -->
+<div class="col-12 col-lg-9">
+        {% for chunk in products %}
+            <div>
+                {% for product in chunk %}
+                        <div class="row">
+                            <div class="col-3">
+                                <p class="fs-20">
+                                    <a href="{% url 'product-page' product.id %}">
+                                        {{ product.name }}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-1">
+                                 {{ product.price }}
+                            </div>
+                            <div class="col-2">
+                                <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <button class="btn btn-primary float-right" type="button">Checkout</button>
+{% endblock content %}
