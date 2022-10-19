@@ -13,3 +13,8 @@ def get_image(request, product_id, filename):
     product = Product.objects.get(id=product_id)
     image_data = product.image.open()
     return HttpResponse(image_data, content_type="image/gif")
+
+
+def checkout(request, product_id):
+    product = Product.objects.filter(id=product_id).first()
+    return render(request, 'products/checkout.html', context={'product': product})
