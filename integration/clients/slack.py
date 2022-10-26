@@ -8,7 +8,8 @@ from datetime import datetime
 import functools
 import re
 
-EMOJI = ":taco"
+EMOJI = f":{settings.get('EMOJI_NAME')"
+
 
 class Client():
     def __init__(self, team_id, team_name, bot_token):
@@ -72,36 +73,32 @@ class Client():
         )
 
     def award_taco(self, message, sender, send_alert=True):
-        print("Award Taco Called")
         recipients = re.findall(r'<@([^>]*)>', message)
-        print(f"Recipients: {recipients}")
         # Remove self-given tacos
         while sender in recipients:
             recipients.remove(sender)
-        print("Checking for multi tacos")
-        multi_tacos = re.findall(r"(?<=test)(\d+)(?=:)", message)
+        multi_tacos = re.findall(f"(?<={EMOJI})(\d+)(?=:)", message)
         num_tacos = message.count(f'{EMOJI}:') + sum(map(int, multi_tacos))
-        print(f"Num tacos: {num_tacos}")
         given_today = TacoLedger.objects.filter(
             giver=sender,
             timestamp__date=datetime.date(datetime.now())
         ).aggregate(Sum('amount')).get('amount__sum', 0) or 0
-        print(f"Given today: {given_today}")
         tacos_remaining = (settings.TACO_DAILY_CAP -
                            (given_today + (num_tacos * len(recipients))))
+        notif_settings = settings.get("NOTIFICATION_SETTINGS", {})
         if tacos_remaining >= 0:
-            print("SENDING RECEIPT")
             for recipient in set(recipients):
                 ledger = TacoLedger.objects.create(
                     receiver=recipient,
                     giver=sender,
                     amount=num_tacos
                 )
-                self.award_message(sender, recipient, num_tacos)
-                self.confirmation_message(sender, recipient,
-                                          num_tacos, tacos_remaining)
+                if notif_settings.get("SEND_AWARD_MESSAGE", True):
+                    self.award_message(sender, recipient, num_tacos)
+                if notif_settings.get("SEND_RECEIPT_CONFIRMATION", True):
+                    self.confirmation_message(sender, recipient,
+                                              num_tacos, tacos_remaining)
         else:
-            print("SENDING OVERDRAFT")
             self.overdraft(sender, recipients, tacos_remaining, num_tacos)
 
     def listen(self, client, event):
@@ -111,13 +108,9 @@ class Client():
         text = event.get('text', '')
         sender = event.get('user', '')
         if EMOJI in text and '<@' in text:
-            print("EMOJI AND TAG DETECTED")
-            print(text.count(EMOJI))
             if text.count(EMOJI) == 1:
-                print("SENDING SINGLE TACO")
                 self.award_taco(text, sender)
             else:
-                print("SENDING MULTIPLE TACO")
                 # Split on newlines so we don't double award
                 for message in text.split('\n'):
                     self.award_taco(message, sender)
