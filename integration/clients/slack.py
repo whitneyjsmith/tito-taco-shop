@@ -10,6 +10,7 @@ import re
 
 EMOJI = ":taco"
 
+
 class Client():
     def __init__(self, team_id, team_name, bot_token):
         self.team_id = team_id
@@ -127,3 +128,20 @@ class Client():
         self.rtm_client.on("message")(functools.partial(self.listen.__func__,
                                                         self))
         self.rtm_client.start()
+
+    def order_information(self, sender, receiver, item):
+        self.client.web_client.chat_postMessage(
+            channel=receiver,
+            as_user=True,
+            text=f"New Tito Taco Shop Order for {sender}. They purchased {item}. Please deliver."
+        )
+
+    def receipt(self, sender, item, cost, remaining):
+        self.client.web_client.chat_postMessage(
+            channel=sender,
+            as_user=True,
+            text=f"You have purchased {item} for {cost} " +
+            f"taco{'s' if cost > 1 else ''}." +
+            f"You have {remaining} " +
+            f"taco{'s' if remaining > 1 else ''} remaining in your balance."
+        )
