@@ -6,6 +6,7 @@ from integration.clients.slack import Client as Slack
 from integration.models import Team
 from django.conf import settings
 
+
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
     return render(request, 'products/base_product.html', {'product': product})
@@ -20,10 +21,11 @@ def get_image(request, product_id, filename):
 
 def checkout(request, product_id):
     product = Product.objects.filter(id=product_id).first()
-    redeem_tacos(request)
+    print(f"REQUEST POST: {request.POST}")
+    redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
     team_obj = Team.objects.first()
-    slack_client = Slack(team_obj.team_id, team_obj.name, team_obj.bot_user_id)
+    slack_client = Slack("T1DM32N0P", "Monumetric", "xoxb-251031683808-Cz0bVgRM4537MdPvsynKAQ6d")
     user = request.user
-    slack_client.order_information(user.unique_id, settings.ORDER_ID, product.name)
+    slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
     slack_client.receipt(user.unique_id, product.name, product.price, user.taco_bank_set.first().total_tacos)
     return render(request, 'products/checkout.html', context={'product': product})

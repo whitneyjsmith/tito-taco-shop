@@ -25,19 +25,19 @@ class TacoBank(models.Model):
         ]
 
     def __str__(self):
-        return f'Bank: {self.user}, amount: {self.total}'
+        return f'Bank: {self.user}, amount: {self.total_tacos}'
 
     @property
     def total_given(self):
-        return TacoLedger.objects.filter(giver=self.user.unique_id).aggregate(Sum('amount'))
+        return TacoLedger.objects.filter(giver=self.user.unique_id).aggregate(Sum('amount')).get('amount__sum', 0) or 0
 
     @property
     def total_received(self):
-        return TacoLedger.objects.filter(receiver=self.user.unique_id).aggregate(Sum('amount'))
+        return TacoLedger.objects.filter(receiver=self.user.unique_id).aggregate(Sum('amount')).get('amount__sum', 0) or 0
 
     @property
     def total_redeemed(self):
-        return TacoLedger.objects.filter(giver=self.user.unique_id, reciever='666').aggregate(Sum('amount'))
+        return TacoLedger.objects.filter(giver=self.user.unique_id, receiver='666').aggregate(Sum('amount')).get('amount__sum', 0) or 0
 
     @property
     def total_tacos(self):

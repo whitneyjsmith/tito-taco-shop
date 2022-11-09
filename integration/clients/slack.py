@@ -15,7 +15,7 @@ class Client():
     def __init__(self, team_id, team_name, bot_token):
         self.team_id = team_id
         self.team_name = team_name
-        self.client = None
+        self.client = WebClient(token=bot_token)
         self.rtm_client = RTMClient(token=bot_token)
 
     def get_users(self, exclude_bots=True, include_deleted=False):
