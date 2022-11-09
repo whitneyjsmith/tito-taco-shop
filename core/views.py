@@ -17,8 +17,9 @@ def index(request):
     for i in range(0, len(products), step):
         x = i
         chunks.append(products[x:x + step])
+    pprint(request.user.is_authenticated)
     
-    return render(request, 'products/base_index.html', context={'products': chunks})
+    return render(request, 'products/base_index.html', context={'products': chunks, 'user': request.user})
 
 
 
