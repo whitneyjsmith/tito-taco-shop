@@ -1,7 +1,49 @@
 {% extends 'products/base.html' %}
 {% load static %}
 {% block product %}
-<div>
-    <h1>{{ product.name }} PAGE</h1>
+<div class="row border-top">
+    <div class="col-12 col-md-6 center mt-3">
+        <img class="img-fluid" src="{% static 'products/amazon-gift-card.png' %}" alt="gift card pic">
+    </div>
+    <div class="col-12 col-md-6 mt-3">
+        <div class="row">
+            <div class="col col-md-7">
+                <h2 class="fs-45">{{ product.name }}</h2>
+            </div>
+            <div class="col col-md-5">
+                <div class="row">
+                    <div class="col vert-horiz-center">
+                        <span class="fs-40">{{ product.price }}</span>
+                        <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>Description</h2>
+                <p class="prod-description">{{ product.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6">
+        
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="row">
+            <div class="d-grid gap-2 col-md-6">
+                <button type="button" class="btn btn-dark btn-primary">
+                    <a class="add-to-plate-btn" href="{% url 'checkout-page' product.id %}">
+                        Add to Plate
+                    </a>
+                </button>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock product %}
