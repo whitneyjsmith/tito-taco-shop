@@ -1,4 +1,3 @@
-from slack_sdk import WebClient
 from slack_sdk.rtm_v2 import RTMClient
 from integration.models import TeamUser, Team
 from ledger.models import TacoLedger
@@ -8,15 +7,15 @@ from datetime import datetime
 import functools
 import re
 
-EMOJI = f":{settings.get('EMOJI_NAME')"
+EMOJI = f":{settings.EMOJI_NAME}"
 
 
 class Client():
     def __init__(self, team_id, team_name, bot_token):
         self.team_id = team_id
         self.team_name = team_name
-        self.client = None
         self.rtm_client = RTMClient(token=bot_token)
+        self.client = self.rtm_client
 
     def get_users(self, exclude_bots=True, include_deleted=False):
         res = self.client.users_list()
