@@ -3,6 +3,7 @@ Django production settings for core project
 """
 import os
 import dj_database_url
+import json
 
 DEBUG = True if (os.environ.get("DEBUG", "true").lower() == "true") else False
 
