@@ -21,11 +21,16 @@ def get_image(request, product_id, filename):
 
 def checkout(request, product_id):
     product = Product.objects.filter(id=product_id).first()
-    print(f"REQUEST POST: {request.POST}")
+    return render(request, 'products/checkout.html', context={'product': product})
+
+
+def checkout_button(request, product_id):
+    #print(f"REQUEST POST: {request.POST}")
+    product = Product.objects.filter(id=product_id).first()
     redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
     team_obj = Team.objects.first()
-    slack_client = Slack("T1DM32N0P", "Monumetric", "xoxb-251031683808-Cz0bVgRM4537MdPvsynKAQ6d")
+    slack_client = Slack(settings.TEAM_ID, settings.TEAM_NAME, settings.SLACK_BOT_TOKEN)
     user = request.user
     slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
     slack_client.receipt(user.unique_id, product.name, product.price, user.taco_bank_set.first().total_tacos)
-    return render(request, 'products/checkout.html', context={'product': product})
+    return render(request, 'products/base.html', context={'product': product})
