@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from ledger.models import TacoBank
 from products.models import Product
 from ledger.tasks import redeem_tacos
 from integration.clients.slack import Client as Slack
@@ -25,12 +27,11 @@ def checkout(request, product_id):
 
 
 def checkout_button(request, product_id):
-    #print(f"REQUEST POST: {request.POST}")
     product = Product.objects.filter(id=product_id).first()
     redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
-    team_obj = Team.objects.first()
     slack_client = Slack(settings.TEAM_ID, settings.TEAM_NAME, settings.SLACK_BOT_TOKEN)
     user = request.user
+    taco_bank = TacoBank.objects.filter(user=user)
     slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
-    slack_client.receipt(user.unique_id, product.name, product.price, user.taco_bank_set.first().total_tacos)
-    return render(request, 'products/base.html', context={'product': product})
+    slack_client.receipt(user.unique_id, product.name, product.price, taco_bank.first().total_tacos)
+    return render(request, 'products/base_index.html', context={'product': product})
