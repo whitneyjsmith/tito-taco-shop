@@ -124,7 +124,7 @@ class Client():
         self.client.web_client.chat_postMessage(
             channel=receiver,
             as_user=True,
-            text=f"New Tito Taco Shop order for {sender}. They purchased {item}. Please deliver."
+            text=f"New Tito Taco Shop order for <@{sender}>. They purchased {item}. Please deliver."
         )
 
     def receipt(self, sender, item, cost, remaining):
