@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from ledger.models import TacoBank
 from products.models import Product
-from ledger.tasks import redeem_tacos
+from ledger.tasks import redeem_tacos, TacoBank
 from integration.clients.slack import Client as Slack
 from integration.models import Team
 from django.conf import settings

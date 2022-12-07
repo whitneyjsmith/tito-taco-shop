@@ -1,13 +1,6 @@
 from django.contrib import admin
-from .models import TacoLedger, TacoBank
+from .models import *
 
 
-# Register your models here.
-@admin.register(TacoLedger)
-class TacoLedgerAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(TacoBank)
-class TacoBankAdmin(admin.ModelAdmin):
-    pass
+admin.site.register(TacoBank)
+admin.site.register(TacoLedger)

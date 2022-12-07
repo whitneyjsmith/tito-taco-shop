@@ -2,6 +2,11 @@ from django.shortcuts import render
 from products.models import Product
 from django.http import HttpResponse
 from pprint import pprint
+from ledger.models import TacoBank
+
+
+def bank_account(user):
+    return TacoBank.objects.filter(user=user).first()
 
 
 def index(request):
@@ -17,9 +22,11 @@ def index(request):
     for i in range(0, len(products), step):
         x = i
         chunks.append(products[x:x + step])
-    pprint(request.user.is_authenticated)
     
-    return render(request, 'products/base_index.html', context={'products': chunks, 'user': request.user})
-
-
-
+    account = bank_account(request.user)
+    context = {
+        'taco_balance': account.total_tacos,
+        'products': chunks,
+        'user': request.user
+    }
+    return render(request, 'products/base_index.html', context=context)
