@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from products.models import Product
+from ledger.models import TacoBank
 
 
 def product(request, product_id):
