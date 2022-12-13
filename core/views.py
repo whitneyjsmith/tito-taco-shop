@@ -17,16 +17,23 @@ def index(request):
         'price': p.price,
         'description': p.description
     } for p in Product.objects.all()]
-    step = 3 # max number of products in a row
+    step = 3  # max number of products in a row
     chunks = []
     for i in range(0, len(products), step):
         x = i
         chunks.append(products[x:x + step])
-    
-    account = bank_account(request.user)
-    context = {
-        'taco_balance': account.total_tacos,
-        'products': chunks,
-        'user': request.user
-    }
+
+    if request.user.is_authenticated:
+        account = bank_account(request.user)
+        context = {
+            'taco_balance': account.total_tacos if request.user.is_authenticated else 0,
+            'products': chunks,
+            'user': request.user
+        }
+    else:
+        context = {
+            'taco_balance': 0,
+            'products': chunks,
+            'user': request.user
+        }
     return render(request, 'products/base_index.html', context=context)
