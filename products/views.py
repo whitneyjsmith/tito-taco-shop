@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from products.models import Product
+
 from ledger.models import TacoBank
+from products.models import Product
+from ledger.tasks import redeem_tacos, TacoBank
+from integration.clients.slack import Client as Slack
+from integration.models import Team
+from django.conf import settings
 
 
 def product(request, product_id):
@@ -19,3 +24,16 @@ def get_image(request, product_id, filename):
 def checkout(request, product_id):
     product = Product.objects.filter(id=product_id).first()
     return render(request, 'products/checkout.html', context={'product': product})
+
+
+def checkout_button(request, product_id):
+    product = Product.objects.filter(id=product_id).first()
+    slack_client = Slack(settings.TEAM_ID, settings.TEAM_NAME, settings.SLACK_BOT_TOKEN)
+    user = request.user
+    taco_bank = TacoBank.objects.filter(user=user)
+    total_tacos = taco_bank.first().total_tacos
+    if total_tacos >= product.price:
+        redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
+        slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
+        slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
+    return render(request, 'products/base_index.html', context={'product': product})

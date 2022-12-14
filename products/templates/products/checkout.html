@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <div>
-        <h1>Ready to checkout?</h1>
+        <h1>Ready to check out?</h1>
     </div>
     <div class="row">
         <div class="col-12 col-lg-9">
@@ -35,9 +35,14 @@
         </div>
     </div>
     <div class="col-1">
-        <div class="rowt">
-            <button class="btn btn-primary fa-align-right" type="button">Order</button>
+        <div class="row">
+            <button class="btn btn-primary fa-align-right" type="button">
+                <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
+                    Order
+                </a>
+            </button>
         </div>
+    </div>
     </div>
 
 {% endblock content %}

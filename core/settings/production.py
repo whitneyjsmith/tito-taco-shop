@@ -10,6 +10,7 @@ DEBUG = True if (os.environ.get("DEBUG", "true").lower() == "true") else False
 SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
 SLACK_SCOPE = os.environ.get('SLACK_SCOPE')
+ORDER_CHANNEL = os.environ.get('ORDER_CHANNEL')
 
 SLACK_PIPELINES = os.environ.get('SLACK_PIPELINES') # json.loads?
 
