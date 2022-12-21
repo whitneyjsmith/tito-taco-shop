@@ -4,12 +4,10 @@
     <div>
         <h1>Ready to check out?</h1>
     </div>
-
     <div class="row">
         <div class="col-12 col-lg-9">
             <div class="row">
                 <div class="col-12 col-md-4 product center">
-                    <!-- <img class="img-fluid" src="/{{ product.id }}/{{ product.image }}" alt="product picture"> -->
                     <div class="row">
                         <div class="col-12">
                             <img class="img-fluid prod-pic-home" src="{% static 'products/amazon-gift-card.png' %}"
@@ -41,11 +39,8 @@
                 <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
                     Order
                 </a>
-
             </button>
-
         </div>
-
     </div>
     <div class="container-fluid">
         {% if messages %}
