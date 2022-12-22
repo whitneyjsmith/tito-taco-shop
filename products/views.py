@@ -7,6 +7,7 @@ from ledger.tasks import redeem_tacos, TacoBank
 from integration.clients.slack import Client as Slack
 from integration.models import Team
 from django.conf import settings
+from django.contrib import messages
 
 
 def product(request, product_id):
@@ -36,4 +37,7 @@ def checkout_button(request, product_id):
         redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
         slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
         slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
+    else:
+        messages.error(request, "Insufficient taco balance.")
+        return render(request, 'products/checkout.html', context={'product': product})
     return render(request, 'products/base_index.html', context={'product': product})
