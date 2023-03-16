@@ -7,6 +7,7 @@ import json
 from google.oauth2 import service_account
 
 DEBUG = True if (os.environ.get("DEBUG", "true").lower() == "true") else False
+CSRF_TRUSTED_ORIGINS = json.loads(os.environ.get('CSRF_TRUSTED_ORIGINS'))
 
 SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
@@ -21,7 +22,7 @@ TACO_DAILY_LIMIT = os.environ.get('taco_daily_limit')
 DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE')
 GS_BUCKET_NAME = os.environ.get('GS_BUCKET_NAME')
 STATICFILES_STORAGE = os.environ.get('STATICFILES_STORAGE')
-TITO_GCS_CREDS = os.environ.get("GOOGLE_CREDENTIALS")
+TITO_GCS_CREDS = json.loads(os.environ.get("GOOGLE_CREDENTIALS"))
 GS_CREDENTIALS = service_account.Credentials.from_service_account_info(TITO_GCS_CREDS)
 
 

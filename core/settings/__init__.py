@@ -75,6 +75,8 @@ CAS_SERVER_URL = os.environ.get("CAS_URL", "https://account.monumetric.com/")
 CAS_LOGOUT_COMPLETELY = True
 CAS_PROVIDE_URL_TO_LOGOUT = True
 CAS_LOGIN_MSG = None
+CAS_AUTO_CREATE_USERS = True
+CAS_CHECK_NEXT = False
 
 
 ROOT_URLCONF = 'core.urls'

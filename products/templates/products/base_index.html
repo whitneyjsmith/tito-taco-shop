@@ -4,7 +4,7 @@
 
 <div class="row border-top center marg-b-50">
     <div class="col">
-        <p class="fs-20 bold">TITO GRAPHIC</p>
+        <p class="fs-20 bold"></p>
         <h1 class="bold fs-70">When we succeed,<br>We taco 'bout it!</h1>
     </div>
 </div>
@@ -19,14 +19,14 @@
         </ul>
     </div> -->
     <!-- <div class="col-12 col-lg-9" id="products-col"> -->
-    <div class="col-12" id="products-col"></div>
+    <div class="col-12" id="products-col">
         {% for chunk in products %}
             <div class="row">
                 {% for product in chunk %}
                     <div class="col-12 col-md-4 product center">
                         <div class="row">
                             <div class="col-12">
-                                <img class="img-fluid prod-pic-home" src="{{ product.image.url }}" alt="gift card pic">
+                                <img class="img-fluid prod-pic-home" onclick="location.href='{% url 'product-page' product.id %}'" style="cursor: pointer;" src="{{ product.image.url }}" alt="gift card pic">
                             </div>
                         </div>
                         <div class="row vert-horiz-center">
@@ -41,7 +41,7 @@
                                 <p>{{ product.price }}</p>
                             </div>
                             <div class="col-12 col-md-3">
-                                <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
+                                <p><img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture"></p>
                             </div>
                         </div>
                     </div>
