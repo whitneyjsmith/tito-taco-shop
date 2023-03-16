@@ -12,7 +12,13 @@ from django.contrib import messages
 
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
-    return render(request, 'products/base_product.html', {'product': product})
+    context = {'product': product, 'user': request.user}
+    if request.user.is_authenticated:
+        account = TacoBank.objects.filter(user=request.user).first()
+        context['taco_balance'] = account.total_tacos
+    else:
+        context['taco_balance'] = 0
+    return render(request, 'products/base_product.html', context)
 
 
 def get_image(request, product_id, filename):
@@ -34,7 +40,7 @@ def checkout_button(request, product_id):
     taco_bank = TacoBank.objects.filter(user=user)
     total_tacos = taco_bank.first().total_tacos
     if total_tacos >= product.price:
-        redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name})
+        redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name, "amount": product.price})
         slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
         slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
     else:
