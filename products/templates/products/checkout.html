@@ -6,6 +6,9 @@
         <h1>Ready to check out?</h1>
         <p>*At the moment, you can only fit one item on your plate. Tito is working with our supplier to acquire larger plates for your use in the future.</p>
     <h3>Your Plate:</h3>
+    {% if day_limit >= 0 %}
+    <small class="{% if display_spend_warning %} text-danger {% else %}text-muted {% endif %}">You have purchased {{ purchases_today }} of the daily allotment of {{ day_limit }} items.</small>
+    {% endif %}
     </div>
     <div class="col-12 col-md-6 center mt-3">
         <div class="row">
@@ -44,7 +47,7 @@
             <div class="d-grid gap-2 col-md-6">
                 {% if user.is_authenticated %}
                 <div class="row">
-                <button type="button" class="btn btn-dark btn-primary col-md" onclick="window.location.href='{% url 'checkout-page' product.id %}'">
+                <button type="button" {% if display_spend_warning %} disabled {% endif %} class="btn btn-dark btn-primary col-md" onclick="window.location.href='{% url 'checkout-page' product.id %}'">
                     <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
                         Order
                     </a>
