@@ -6,10 +6,7 @@ from ledger.models import TacoBank
 
 
 def bank_account(user):
-    bank = TacoBank.objects.filter(user=user).first()
-    if not bank:
-        bank = TacoBank.objects.create(user=user)
-    return
+    return TacoBank.objects.get_or_create(user=user)
 
 
 def index(request):
