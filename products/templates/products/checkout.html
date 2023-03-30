@@ -1,55 +1,71 @@
 {% extends 'products/base.html' %}
 {% load static %}
 {% block content %}
+<div class="row border-top">
     <div>
         <h1>Ready to check out?</h1>
+        <p>*At the moment, you can only fit one item on your plate. Tito is working with our supplier to acquire larger plates for your use in the future.</p>
+    <h3>Your Plate:</h3>
     </div>
-    <div class="row">
-        <div class="col-12 col-lg-9">
-            <div class="row">
-                <div class="col-12 col-md-4 product center">
-                    <div class="row">
-                        <div class="col-12">
-                            <img class="img-fluid prod-pic-home" src="{{ product.image.url }}"
-                                 alt="gift card pic">
-                        </div>
+    <div class="col-12 col-md-6 center mt-3">
+        <div class="row">
+            <div class="col-12 col-md-6 product center">
+                <div class="row">
+                    <div class="col-12">
+                        <img class="img-fluid prod-pic-home" src="{{ product.image.url }}"
+                                alt="gift card pic">
                     </div>
-                    <div class="row vert-horiz-center">
-                        <div class="col-12 col-md-6">
-                            <p class="fs-20">
-                                <a href="{% url 'product-page' product.id %}">
-                                    {{ product.name }}
-                                </a>
-                            </p>
-                        </div>
-                        <div class="col-12 col-md-3 center">
-                            <p>{{ product.price }}</p>
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
-                        </div>
+                </div>
+                <div class="row vert-horiz-center">
+                    <div class="col-12 col-md-6">
+                        <p class="fs-20">
+                            <a href="{% url 'product-page' product.id %}">
+                                {{ product.name }}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-3 center">
+                        <p>{{ product.price }}</p>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-1">
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-6">
+    </div>
+    <div class="col-12 col-md-6">
         <div class="row">
-            <button class="btn btn-primary fa-align-right" type="button"  onclick="window.location.href='{% url 'checkout-button' product.id %}'">
-                <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
-                    Order
-                </a>
-            </button>
+            <div class="d-grid gap-2 col-md-6">
+                {% if user.is_authenticated %}
+                <div class="row">
+                <button type="button" class="btn btn-dark btn-primary col-md" onclick="window.location.href='{% url 'checkout-page' product.id %}'">
+                    <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
+                        Order
+                    </a>
+                </button>
+                <button type="button" class="btn btn-danger btn-primary col-md" onclick="window.location.href='{% url 'home-page' %}'">
+                    <a class="add-to-plate-btn" href="{% url 'home-page' %}">
+                        Remove From Plate
+                    </a>
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-dark btn-primary" onclick="window.location.href='{% url 'checkout-page' product.id %}'">
+                    <a class="add-to-plate-btn" href="{% url 'cas_ng_login' %}">
+                        Login to Continue
+                    </a>
+                </button>
+                {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
         </div>
     </div>
-    <div class="container-fluid">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" style="color: orangered; font-size: 30px;">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    </div>
+</div>
 {% endblock content %}

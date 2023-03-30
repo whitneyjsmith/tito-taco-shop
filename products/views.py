@@ -30,7 +30,15 @@ def get_image(request, product_id, filename):
 
 def checkout(request, product_id):
     product = Product.objects.filter(id=product_id).first()
-    return render(request, 'products/checkout.html', context={'product': product})
+    context = {'product': product,
+               'user': request.user}
+    if request.user.is_authenticated:
+        account = TacoBank.objects.filter(user=request.user).first()
+        context['taco_balance'] = account.total_tacos
+    else:
+        context['taco_balance'] = 0
+    return render(request, 'products/checkout.html',
+                  context=context)
 
 
 def checkout_button(request, product_id):
