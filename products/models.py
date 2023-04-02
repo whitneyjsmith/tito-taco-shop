@@ -15,7 +15,7 @@ class Attribute(models.Model):
     attribute_base = models.ForeignKey(AttributeBase, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.attribute_base.name
+        return f'{self.attribute_base.name} - {self.value}
 
 
 class Product(models.Model):
@@ -23,10 +23,20 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images')
     price = models.IntegerField()
     description = models.CharField(max_length=1000)
-    attributes = models.ManyToManyField(Attribute)
+    attributes = models.ManyToManyField(Attribute, through='ProductAttributeStock')
+    attribute_stock
 
     def __str__(self):
         return self.name
+
+
+class ProductAttributeStock(models.Model):
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    stock = models.IntegerField(blank=True, null=True, default=None)
+
+    def __str__(self):
+        return f"{self.product.name}:{self.attribute}:{self.stock}"
 
 
 class Category(models.Model):
