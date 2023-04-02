@@ -3,6 +3,7 @@ from django.db.models import Sum
 from django.db.models import Q
 from django.conf import settings
 from user.models import User
+import datetime
 
 
 class TacoLedger(models.Model):
@@ -48,3 +49,31 @@ class TacoBank(models.Model):
     def total_tacos(self):
         amount = (self.total_given + self.total_received) - self.total_redeemed
         return amount if amount > 0 else 0
+
+    @property
+    def total_purchases(self):
+        amount = TacoLedger.objects.filter(giver=self.user.unique_id,
+                                           receiver=settings.SLACK_BOT_ID,
+                                           ).count()
+        return amount if amount else 0
+
+    @property
+    def total_purchases_curr_month(self):
+        today = datetime.datetime.now()
+        amount = TacoLedger.objects.filter(giver=self.user.unique_id,
+                                           receiver=settings.SLACK_BOT_ID,
+                                           timestamp__year=today.year,
+                                           timestamp__month=today.month
+                                           ).count()
+        return amount if amount else 0
+
+    @property
+    def total_purchases_today(self):
+        today = datetime.datetime.now()
+        amount = TacoLedger.objects.filter(giver=self.user.unique_id,
+                                           receiver=settings.SLACK_BOT_ID,
+                                           timestamp__year=today.year,
+                                           timestamp__month=today.month,
+                                           timestamp__day=today.day
+                                           ).count()
+        return amount if amount else 0
