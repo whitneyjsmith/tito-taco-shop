@@ -11,7 +11,7 @@ class TacoLedger(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     receiver = models.CharField(max_length=100)
     giver = models.CharField(max_length=100)
-    details = models.JSONField(blank=True, null=True, default=dict)
+    # details = models.JSONField(blank=True, null=True, default=dict)
 
     def __str__(self):
         return f'{self.timestamp}: {self.giver} --> {self.receiver}, {self.amount} tacos'
