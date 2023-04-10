@@ -1,19 +1,29 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import Sum
 
 from ledger.models import TacoBank
-from products.models import Product
+from products.models import Product, ProductAttributeStock
 from ledger.tasks import redeem_tacos, TacoBank
 from integration.clients.slack import Client as Slack
 from integration.models import Team
 from django.conf import settings
 from django.contrib import messages
+from .forms import ProductSizeForm
 
 
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
+    size_stock = product.attribute_stock.filter(attribute__attribute_base__name = 'Size', stock__gte = 1)
+    total_stock = size_stock.aggregate(Sum('stock'))['stock__sum']
+    if not total_stock:
+        total_stock = product.total_stock
+    form = ProductSizeForm()
+    form.fields['size'].queryset = size_stock
     context = {'product': product, 'user': request.user,
-               'day_limit': settings.MAX_PURCHASES_PER_DAY}
+               'day_limit': settings.MAX_PURCHASES_PER_DAY,
+               'form': form if size_stock.count() else '',
+               'total_stock': total_stock or 0}
     if request.user.is_authenticated:
         account = TacoBank.objects.filter(user=request.user).first()
         context['taco_balance'] = account.total_tacos
@@ -33,9 +43,12 @@ def get_image(request, product_id, filename):
 
 def checkout(request, product_id):
     product = Product.objects.filter(id=product_id).first()
+    size_param = request.GET.get('size')
     context = {'product': product,
                'user': request.user,
-               'day_limit': settings.MAX_PURCHASES_PER_DAY}
+               'day_limit': settings.MAX_PURCHASES_PER_DAY,
+               'size_str': f'?size={size_param}' if size_param else ""
+               }
     if request.user.is_authenticated:
         account = TacoBank.objects.filter(user=request.user).first()
         context['taco_balance'] = account.total_tacos
@@ -48,16 +61,26 @@ def checkout(request, product_id):
 
 
 def checkout_button(request, product_id):
+    print('CHECKOUT PRESSED')
     product = Product.objects.filter(id=product_id).first()
-    slack_client = Slack(settings.TEAM_ID, settings.TEAM_NAME, settings.SLACK_BOT_TOKEN)
-    user = request.user
-    taco_bank = TacoBank.objects.filter(user=user)
-    total_tacos = taco_bank.first().total_tacos
-    if total_tacos >= product.price:
-        redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name, "amount": product.price})
-        slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
-        slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
+    # slack_client = Slack(settings.TEAM_ID, settings.TEAM_NAME, settings.SLACK_BOT_TOKEN)
+    # user = request.user
+    # taco_bank = TacoBank.objects.filter(user=user)
+    # total_tacos = taco_bank.first().total_tacos
+    # if total_tacos >= product.price:
+    #     redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name, "amount": product.price})
+    #     slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
+    #     slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
+    # else:
+    #     messages.error(request, "Insufficient taco balance.")
+    #     return render(request, 'products/checkout.html', context={'product': product})
+    purchased_size = request.GET.get('size')
+    print(f"PURCHASED SIZE: {purchased_size}")
+    if purchased_size:
+        size = ProductAttributeStock.objects.get(id=purchased_size)
+        size.stock = size.stock - 1
+        size.save()
     else:
-        messages.error(request, "Insufficient taco balance.")
-        return render(request, 'products/checkout.html', context={'product': product})
+        product.total_stock = (product.total_stock or 0) - 1
+        product.save()
     return render(request, 'products/base_index.html', context={'product': product})
