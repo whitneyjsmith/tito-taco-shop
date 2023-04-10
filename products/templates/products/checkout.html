@@ -47,9 +47,9 @@
             <div class="d-grid gap-2 col-md-6">
                 {% if user.is_authenticated %}
                 <div class="row">
-                <button type="button" {% if display_spend_warning %} disabled {% endif %} class="btn btn-dark btn-primary col-md" onclick="window.location.href='{% url 'checkout-page' product.id %}'">
-                    <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}">
-                        Order
+                <button type="button" {% if display_spend_warning %} disabled {% endif %} class="btn btn-dark btn-primary col-md" onclick="window.location.href='{% url 'checkout-button' product.id %}{{size_str}}'">
+                    <a class="add-to-plate-btn" href="{% url 'checkout-button' product.id %}{{size_str}}">
+                        Order!
                     </a>
                 </button>
                 <button type="button" class="btn btn-danger btn-primary col-md" onclick="window.location.href='{% url 'home-page' %}'">
