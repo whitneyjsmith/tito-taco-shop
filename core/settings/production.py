@@ -40,3 +40,6 @@ TEAM_NAME = os.environ.get("TEAM_NAME")
 TEAM_ID = os.environ.get("TEAM_ID")
 SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
 SLACK_BOT_ID = os.environ.get("SLACK_BOT_ID")
+
+
+MAX_PURCHASES_PER_DAY = os.environ.get('MAX_PURCHASES_PER_DAY')
