@@ -67,14 +67,18 @@ def checkout_button(request, product_id):
     user = request.user
     taco_bank = TacoBank.objects.filter(user=user)
     total_tacos = taco_bank.first().total_tacos
+    purchased_size = request.GET.get('size')
+    size = ''
+    if purchased_size:
+        size = ProductAttributeStock.objects.get(id=purchased_size)
     if total_tacos >= product.price:
         redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name, "amount": product.price})
-        slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name)
+        slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name, size)
         slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
     else:
         messages.error(request, "Insufficient taco balance.")
         return render(request, 'products/checkout.html', context={'product': product})
-    purchased_size = request.GET.get('size')
+    
     print(f"PURCHASED SIZE: {purchased_size}")
     if purchased_size:
         size = ProductAttributeStock.objects.get(id=purchased_size)

@@ -120,11 +120,11 @@ class Client():
                                                         self))
         self.rtm_client.start()
 
-    def order_information(self, sender, receiver, item):
+    def order_information(self, sender, receiver, item, size):
         self.client.web_client.chat_postMessage(
             channel=receiver,
             as_user=True,
-            text=f"New Tito Taco Shop order has been placed by <@{sender}>. They have purchased {item}. Please arrange for them to receive this item. Thank you!"
+            text=f"New Tito Taco Shop order has been placed by <@{sender}>. They have purchased {item}. {'In Size: '+size if size else ''} Please arrange for them to receive this item. Thank you!"
         )
 
     def receipt(self, sender, item, cost, remaining):
