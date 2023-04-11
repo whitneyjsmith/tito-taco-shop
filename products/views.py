@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from ledger.models import TacoBank
@@ -83,4 +83,4 @@ def checkout_button(request, product_id):
     else:
         product.general_stock = (product.general_stock or 0) - 1
         product.save()
-    return render(request, 'products/base_index.html', context={'product': product})
+    return redirect('home-page')
