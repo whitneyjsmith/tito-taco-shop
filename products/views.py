@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.db.models import Sum
 
 from ledger.models import TacoBank
 from products.models import Product, ProductAttributeStock
@@ -15,15 +14,12 @@ from .forms import ProductSizeForm
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
     size_stock = product.attribute_stock.filter(attribute__attribute_base__name = 'Size', stock__gte = 1)
-    total_stock = size_stock.aggregate(Sum('stock'))['stock__sum']
-    if not total_stock:
-        total_stock = product.total_stock
     form = ProductSizeForm()
     form.fields['size'].queryset = size_stock
     context = {'product': product, 'user': request.user,
                'day_limit': settings.MAX_PURCHASES_PER_DAY,
                'form': form if size_stock.count() else '',
-               'total_stock': total_stock or 0}
+               }
     if request.user.is_authenticated:
         account = TacoBank.objects.filter(user=request.user).first()
         context['taco_balance'] = account.total_tacos
@@ -85,6 +81,6 @@ def checkout_button(request, product_id):
         size.stock = size.stock - 1
         size.save()
     else:
-        product.total_stock = (product.total_stock or 0) - 1
+        product.general_stock = (product.general_stock or 0) - 1
         product.save()
     return render(request, 'products/base_index.html', context={'product': product})

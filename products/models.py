@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.core.files.storage import default_storage
 
 
@@ -24,10 +25,15 @@ class Product(models.Model):
     price = models.IntegerField()
     description = models.CharField(max_length=1000)
     attributes = models.ManyToManyField(Attribute, through='ProductAttributeStock')
-    total_stock = models.IntegerField(blank=True, null=True, default=None)
+    general_stock = models.IntegerField(blank=True, null=True, default=None)
 
     def __str__(self):
         return self.name
+
+    @property
+    def total_stock(self):
+        stock_sum = self.attribute_stock.filter(attribute__attribute_base__name = 'Size', stock__gte = 1).aggregate(Sum('stock'))['stock__sum']
+        return stock_sum if stock_sum else self.general_stock or 0
 
 
 class ProductAttributeStock(models.Model):
