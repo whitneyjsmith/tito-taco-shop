@@ -23,7 +23,7 @@
             <div class="col">
                 <h2>Description</h2>
                 <p class="prod-description">{{ product.description }}</p>
-                <p>In Stock: {{ total_stock }}</p>
+                <p>In Stock: {{ product.total_stock }}</p>
                 <form id="size" action="{% url 'checkout-page' product.id %}">
                     {{ form }}
                 </form>
@@ -38,11 +38,11 @@
         <div class="row">
             <div class="d-grid gap-2 col-md-6">
                 {% if user.is_authenticated %}
-                <input form="size" type="submit" {% if display_spend_warning %} disabled {% endif %}  {% if total_stock == 0 %} disabled {% endif %} class="btn btn-dark btn-primary" value="Add to Plate">
+                <input form="size" type="submit" {% if display_spend_warning %} disabled {% endif %}  {% if product.total_stock == 0 %} disabled {% endif %} class="btn btn-dark btn-primary" value="Add to Plate">
                 {% if day_limit >= 0 %}
                 <small class="{% if purchases_today >= day_limit %} text-danger {% else %}text-muted {% endif %}">You have purchased {{ purchases_today }} of the daily allotment of {{ day_limit }} items.</small>
                 {% endif %}
-                {% if total_stock <= 0 %}
+                {% if product.total_stock <= 0 %}
                 <small class="text-danger">This item is out of stock!</small>
                 {% endif %}
                 {% else %}
