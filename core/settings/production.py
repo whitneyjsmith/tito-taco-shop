@@ -42,4 +42,4 @@ SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
 SLACK_BOT_ID = os.environ.get("SLACK_BOT_ID")
 
 
-MAX_PURCHASES_PER_DAY = os.environ.get('MAX_PURCHASES_PER_DAY')
+MAX_PURCHASES_PER_DAY = int(os.environ.get('MAX_PURCHASES_PER_DAY')) if os.environ.get('MAX_PURCHASES_PER_DAY').isdigit() else None
