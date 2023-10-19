@@ -70,7 +70,7 @@ def checkout_button(request, product_id):
     if total_tacos >= product.price:
         redeem_tacos({"user_id": request.user.unique_id, "product_name": product.name, "amount": product.price})
         slack_client.order_information(user.unique_id, settings.ORDER_CHANNEL, product.name, size)
-        slack_client.receipt(user.unique_id, product.name, product.price, total_tacos)
+        slack_client.receipt(user.unique_id, product.name, product.price, total_tacos-product.price)
     else:
         messages.error(request, "Insufficient taco balance.")
         return render(request, 'products/checkout.html', context={'product': product})
