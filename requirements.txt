@@ -6,6 +6,7 @@ django-extensions==3.1.5
 djangorestframework==3.13.1
 django-storages==1.13.2
 google-api-core==2.11.0
+google-api-python-client==2.105.0
 google-auth==2.16.2
 google-cloud-core==2.3.2
 google-cloud-storage==2.7.0

@@ -13,3 +13,4 @@ core/settings/local.py
 google-credentials.json
 
 db.postgres
+.env
