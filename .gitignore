@@ -11,3 +11,5 @@ __pycache__/
 core/settings/local.py
 
 google-credentials.json
+
+db.postgres
