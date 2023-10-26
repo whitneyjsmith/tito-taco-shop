@@ -11,14 +11,13 @@ services:
             - "6666:5432"
     backend:
         build: .
-        command:
-            - "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+        command: 'python manage.py runserver 0.0.0.0:8000'
         volumes:
             - .:/app
         ports:
             - "8000:8000"
         network_mode: "host"
-        environment:
-            - DATABASE_URL="postgres://postgres:postgres@127.0.0.1:6666/postgres"
+        env_file:
+            - ".env"
         depends_on:
             - db
