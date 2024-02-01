@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 import django_cas_ng.views
 from . import views
+from user.views import UserViewset
 
 urlpatterns = [
+    path('user/me/', UserViewset.as_view({'get': 'retrieve'}), name='me'),
     path('account/login/', django_cas_ng.views.LoginView.as_view(), name='cas_ng_login'),
     path('account/logout/', django_cas_ng.views.LogoutView.as_view(), name='cas_ng_logout'),
     path('admin/', admin.site.urls),
