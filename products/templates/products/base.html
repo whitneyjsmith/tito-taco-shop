@@ -1,52 +1,80 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-        <link href="{% static 'products/universal.css' %}" rel="stylesheet">
+      <meta charset="utf-8">
+      <title>Titos Taco Shop</title>
+      <meta name="generator" content="GrapesJS Studio">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta property="og:type" content="website">
+      <meta name="robots" content="index,follow">
+      <link rel="stylesheet" href="{% static 'products/css/style.css' %}">
+      <script>
+        function hamitup(x) {
+          x.classList.toggle("ham-change");
+          document.getElementById("iffs").classList.toggle('responsive');
+        }
+        </script>
     </head>
-    <body>
-        <div class="container-fluid">
-            
-                <div class="row" id="top-row">
-                    <div class="col">
-                            <a href="{% url 'home-page' %}">
-                            <img class="img-fluid" src="{% static 'products/titos-taco-shop-blue.webp' %}"/>
-                            </a>
-                    </div>
-                    <div class="col m-none">
-                        
-                    </div>
-                    <div class="col">
-                        {% if user.is_authenticated %}
-                        <dvi class="row marg-t-40 m-col-float-right">
-                            <div class="col" id="balance-amount">
-                                <p>Balance: <span class="text-nowrap">{{ taco_balance }} <img class="small-taco" src="{% static 'products/taco.png' %}" alt="taco picture"></span></p>
-                            </div>
-                            <div class="col vert-horiz-center">
-                                <a href="{% url 'cas_ng_logout' %}">Logout</a>
-                            </div>
-                        </dvi>
-                        {% else %}
-                        <div class="row marg-t-40 m-col-float-right">
-                            <div class="col" id="balance-amount">
-                                <p>Login to view your balance</p>
-                            </div>
-                            <div class="col vert-horiz-center">
-                                <a href="{% url 'cas_ng_login' %}">Login</a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    </div>
+    <body id="iau9">
+      <div id="i6po" class="gjs-grid-row">
+          <div id="itjq" class="gjs-grid-column">
+            <div id="iyd2" class="gjs-grid-row">
+              <div id="iyd24">
+                <div id="iqjl" class="gjs-grid-column"><a id="ip9naa" href="{% url 'home-page' %}" class="gjs-link-box"><img id="iis50m" src="{% static 'products/titos-taco-shop-blue.webp' %}"/></a></div>
+                <div id="iqjlham" class="ham-container" onclick='hamitup(this)'><div class="ham-bar1"></div><div class="ham-bar2"></div><div class="ham-bar3"></div></div>
+              </div>
+                <div class="gjs-grid-column" id="i2ewgz">
+                  <h1 class="gjs-heading" id="imlawn">When we succeed, <span id="idsdmq">We taco 'bout it!</span></h1>
                 </div>
-                    {% block content %}
-                    {% endblock %}
-                    {% block product %}
-                    {% endblock %}
-                
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+                <div id="iffs" class="gjs-grid-column menu">
+                  <div id="it00l" class="gjs-grid-row">
+                      <div id="irtfd" class="gjs-grid-column">
+                        <div class="gjs-grid-row" id="igiizl">
+                            <div class="gjs-grid-column" id="iuqq7g">
+                              {% if user.is_authenticated %}
+                              <div id="iq5lsu">Balance: {{ taco_balance }}</div>
+                              {% else %}
+                              <div id="iq5lsu"><a href="{% url 'cas_ng_login' %}" class="gjs-link">Login  to view your balance </a></div>
+                              {% endif %}
+                            </div>
+                            <div class="gjs-grid-column" id="iwl2sm"><img id="idyepk" src="{% static 'products/taco.png' %}"/></div>
+                        </div>
+                      </div>
+                      <div id="icyzp" class="gjs-grid-column">
+                        <div class="gjs-grid-row" id="itdbuj">
+                          {% if user.is_authenticated %}
+                            <div class="gjs-grid-column"><a id="i88iz" href="{% url 'cas_ng_logout' %}" class="gjs-link">Logout</a></div>
+                            {% else %}
+                            <div class="gjs-grid-column" style="width:20px;"></div>
+                          {% endif %}
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div id="irz7b" class="gjs-grid-row">
+          <div id="iycz3" class="gjs-grid-column">
+            {% block content %}
+            {% endblock %}
+            {% block product %}
+            {% endblock %}
+          </div>
+      </div>
+      <div id="iv3be5" class="gjs-grid-row">
+          <div id="ilriti" class="gjs-grid-column">
+            <div id="iz29ek" class="gjs-grid-row">
+                <div id="ik2rdi" class="gjs-grid-column">
+                  <h2 id="i83vu9" class="gjs-heading">Show off your appreciation, give tacos and get cool swag</h2>
+                  <div id="in201n" class="text-main-content">You get 6 tacos a day to show your appreciation for someone else. Both you and the receiver can cash those in for items in the shop<br/></div>
+                </div>
+            </div>
+            <div id="it6g1v" class="gjs-text-blue">Copyright © 2024 Monumetric</div>
+          </div>
+      </div>
     </body>
 </html>
+
+
