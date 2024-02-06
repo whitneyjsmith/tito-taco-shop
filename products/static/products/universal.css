@@ -24,6 +24,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+.flex-center-children{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .vertical-center {
     margin: 0;
     position: absolute;
@@ -34,6 +40,7 @@ body {
 .border-top {border-top: 3px solid #5A5A5A !important;}
 .fs-20 {font-size: 20px;}
 .fs-40 {font-size: 40px;}
+.fs-30 {font-size: 30px;}
 .fs-45 {font-size: 45px;}
 .fs-70 {font-size: 70px;}
 .bold {font-weight: bold;}

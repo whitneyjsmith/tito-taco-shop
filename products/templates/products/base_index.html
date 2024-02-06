@@ -1,54 +1,35 @@
 {% extends 'products/base.html' %}
 {% load static %}
 {% block content %}
-
-<div class="row border-top center marg-b-50">
-    <div class="col">
-        <p class="fs-20 bold"></p>
-        <h1 class="bold fs-70">When we succeed,<br>We taco 'bout it!</h1>
-    </div>
-</div>
-<div class="row border-top">
-    <!-- <div class="col-12 col-lg-3" id="filter-col">
-        <p>FILTERS GO HERE</p>
-        <ul>
-            <li>Filter 1</li>
-            <li>Filter 2</li>
-            <li>Filter 3</li>
-            <li>Filter 4</li>
-        </ul>
-    </div> -->
-    <!-- <div class="col-12 col-lg-9" id="products-col"> -->
-    <div class="col-12" id="products-col">
-        {% for chunk in products %}
-            <div class="row">
-                {% for product in chunk %}
-                    <div class="col-12 col-md-4 product center">
-                        <div class="row">
-                            <div class="col-12">
-                                <img class="img-fluid prod-pic-home" onclick="location.href='{% url 'product-page' product.id %}'" style="cursor: pointer;" src="{{ product.image.url }}" alt="gift card pic">
-                            </div>
-                        </div>
-                        <div class="row vert-horiz-center">
-                            <div class="col-12 col-md-6">
-                                <p class="fs-20">
-                                    <a href="{% url 'product-page' product.id %}">
-                                        {{ product.name }}
-                                    </a>
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-3 center">
-                                <p>{{ product.price }}</p>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <p><img class="img-fluid" src="{% static 'products/taco.png' %}" alt="taco picture"></p>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+  <section class="gjs-section" id="iexs4">
+    <div class="gjs-container">
+      <!-- <div class="gjs-custom-code" id="i5eo6"> -->
+        <div class="grid">
+          {% for chunk in products %}
+          {% for product in chunk %}
+          <div class="gjs-grid-column" id="ie7tj9">
+            <div id="i1w2fx-23" class="gjs-image-box"
+               style="background-image:url({{ product.image.url }});background-size:contain;background-position:center center;background-attachment:scroll;background-repeat:no-repeat;"
+               onclick="location.href='{% url 'product-page' product.id %}'"></div>
+                
+               <div class="gjs-grid-row" id="inw89l">
+                <div id="icb8mu"><a class="gjs-link" href="{% url 'product-page' product.id %}">
+                  {{ product.name }}
+              </a></div>
+              <!-- <div class="gjs-grid-column" id="ibv6ua"> -->
+                <div class="grid-row-price">
+                <div id="i5139t">{{ product.price }}</div>
+              <!-- </div> -->
+              <div id="i4ouzf-2" class="gjs-grid-column"><img src="{% static 'products/taco.png' %}" id="ikpxpr-2"/>
+              </div>
+              </div>
             </div>
-        {% endfor %}
+          </div>
+          {% endfor %}
+          {% endfor %}
+        </div>
+      <!-- </div> -->
+      <div class="gjs-grid-row" id="i6chb"></div>
     </div>
-</div>
-<p>{{ product.image }}</p>
+  </section>
 {% endblock content %}
