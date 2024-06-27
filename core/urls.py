@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import django_cas_ng.views
+from rest_framework.routers import DefaultRouter
 from . import views
-from user.views import UserViewset
+from user.views import MEView
+from products.views import ProductViewset
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+api_router = DefaultRouter()
+api_router.register(r'products', ProductViewset, basename='products')
 
 urlpatterns = [
-    path('user/me/', UserViewset.as_view({'get': 'retrieve'}), name='me'),
+    path('user/me/', MEView.as_view(), name='me'),
     path('account/login/', django_cas_ng.views.LoginView.as_view(), name='cas_ng_login'),
     path('account/logout/', django_cas_ng.views.LogoutView.as_view(), name='cas_ng_logout'),
     path('admin/', admin.site.urls),
@@ -28,4 +34,10 @@ urlpatterns = [
     path('integration/', include('integration.urls')),
     path('', views.index, name='home-page'),
     path('products/', include('products.urls')),
+    path('api/v1/', include(api_router.urls)),
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'ledger.apps.LedgerConfig',
     'products.apps.ProductsConfig',
     'integration.apps.IntegrationConfig',
@@ -63,6 +65,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+SPECTACULAR_SETTINGS = {
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    'OAS_VERSION': '3.1.0',
+    'TITLE': 'Titos Tacos Client',
+    'DESCRIPTION': 'Communicate with the taco shop API'
+    # 'COMPONENT_SPLIT_REQUEST': True,
+    # OTHER SETTINGS
+}
 
 # Authentication
 AUTHENTICATION_BACKENDS = (
@@ -100,6 +113,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.TemplateHTMLRenderer',
     ],

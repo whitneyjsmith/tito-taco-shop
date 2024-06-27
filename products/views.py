@@ -21,6 +21,7 @@ class ProductViewset(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
+
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
     size_stock = product.attribute_stock.filter(attribute__attribute_base__name = 'Size', stock__gte = 1)
