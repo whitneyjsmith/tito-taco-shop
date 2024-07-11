@@ -10,6 +10,17 @@ from django.conf import settings
 from django.contrib import messages
 from .forms import ProductSizeForm
 
+from rest_framework import viewsets
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
+from products.serializers import ProductSerializer
+
+
+class ProductViewset(viewsets.ModelViewSet):
+
+    renderer_classes = [JSONRenderer]
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+
 
 def product(request, product_id):
     product = Product.objects.filter(id=product_id).first()
